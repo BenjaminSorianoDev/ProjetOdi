@@ -1,0 +1,30 @@
+AppBundle\Entity\Produit:
+    type: entity
+    repositoryClass: AppBundle\Repository\ProduitRepository
+    table: null
+    id:
+        ref_produit:
+            type: string
+    fields:
+        nom_produit:
+            type: string
+            length: '255'
+        description_produit:
+            type: string
+            length: '255'
+        categorie_produit:
+            type: string
+            length: '25'
+        quantite_produit:
+            type: integer
+        quantite_min_produit:
+            type: integer
+        prix_produit:
+            type: integer
+        date_peremption_produit:
+            type: date
+        photo_produit:
+            type: string
+            nullable: true
+        visible_produit:
+            type: boolean

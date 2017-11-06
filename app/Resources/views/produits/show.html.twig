@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Produit</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Ref_produit</th>
+                <td>{{ produit.refproduit }}</td>
+            </tr>
+            <tr>
+                <th>Nom_produit</th>
+                <td>{{ produit.nomproduit }}</td>
+            </tr>
+            <tr>
+                <th>Description_produit</th>
+                <td>{{ produit.descriptionproduit }}</td>
+            </tr>
+            <tr>
+                <th>Categorie_produit</th>
+                <td>{{ produit.categorieproduit }}</td>
+            </tr>
+            <tr>
+                <th>Quantite_produit</th>
+                <td>{{ produit.quantiteproduit }}</td>
+            </tr>
+            <tr>
+                <th>Quantite_min_produit</th>
+                <td>{{ produit.quantiteminproduit }}</td>
+            </tr>
+            <tr>
+                <th>Prix_produit</th>
+                <td>{{ produit.prixproduit }}</td>
+            </tr>
+            <tr>
+                <th>Date_peremption_prduit</th>
+                <td>{% if produit.dateperemptionprduit %}{{ produit.dateperemptionprduit|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Photo_produit</th>
+                <td>{{ produit.photoproduit }}</td>
+            </tr>
+            <tr>
+                <th>Visible_produit</th>
+                <td>{% if produit.visibleproduit %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('produit_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('produit_edit', { 'id': produit.ref_produit }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

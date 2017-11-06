@@ -1,0 +1,23 @@
+AppBundle\Entity\Contenir:
+    repositoryClass: AppBundle\Repository\ContenirRepository
+    type: entity
+    table: contenir
+    fields:
+        quantite_produit:
+            type: integer
+        date_panier:
+            type: datetime
+        quantite_produit_geree:
+            type: integer
+            nullable: true
+    id:
+        id_panier:
+            targetEntity: Panier
+            joinColumns:
+                panier:
+                    referencedColumnName: id_panier
+        ref_produit:
+            targetEntity: Produit
+            joinColumns:
+                produit:
+                    referencedColumnName: ref_produit

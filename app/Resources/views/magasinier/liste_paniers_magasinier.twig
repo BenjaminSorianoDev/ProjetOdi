@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block menu %}
+    {% include 'menubase.twig' %}
+{% endblock %}
+
+{% block header %}
+    <div class="page-header">
+      <h2 class="centrer isoler">Liste des paniers</h2>
+    </div>
+{% endblock %}
+
+{% block section %}
+  <div class="container">
+    {% if Panier %}
+        <table class="table table-striped table-hover ">
+          <thead>
+            <tr>
+              <th>Id. Panier</th>
+              <th>Id. Personne</th>
+              <th>Date de création</th>
+              <th>Contenu</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for paniers in Panier %}
+        	<tr>
+              <td>{{ paniers.getIdPanier() }}</td>
+              <td>{{ paniers.getIdPersonne() }}</td>
+              <td>{{ paniers.getDatePanier() | date("d/m/Y")}}</td>
+              <td><a class="btn btn-primary" href="{{ path('gestionPanierMagasinier', { id_panier : paniers.getIdPanier() }) }}">Gérer</a></td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table> 
+    {% else %}
+       <p class="centrer">Aucun panier dans la base.</p>
+    {% endif %}
+  </div>
+{% endblock %}

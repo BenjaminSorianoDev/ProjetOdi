@@ -1,0 +1,19 @@
+AppBundle\Entity\Alerte:
+    repositoryClass: AppBundle\Repository\AlerteRepository
+    type: entity
+    table: alerte
+    fields:
+        id_alerte:
+            id: true
+            type: integer
+            generator: { strategy: AUTO }
+        cat_alerte:
+            type: integer
+        date_alerte:
+            type: datetime
+    manyToOne:
+        ref_produit:
+            targetEntity: Produit
+            joinColumns:
+                produit:
+                    referencedColumnName: ref_produit

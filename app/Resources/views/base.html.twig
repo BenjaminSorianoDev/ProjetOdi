@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="UTF-8" />
+        <title>
+            {% block title %}
+                Bienvenue
+            {% endblock %}
+        </title>
+        
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+            <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/bootstrap-datetimepicker.min.css') }}">
+        {% endblock %}
+
+    </head>
+    <body>
+
+        <nav class="navbar navbar-default navbar-fixed-top">
+            {% block menu %}
+            {% endblock menu %}
+        </nav>
+
+        <div class="container">
+            <header>
+                {% block header %}
+                {% endblock %}
+            </header>
+
+            <section>
+                {% block section %}
+                {% endblock %}
+            </section>
+        </div>
+        <div class="clear"></div>
+        <footer class="footer">
+            <div class="container">
+                <p class="text-muted">Projet ODI | ©2016</p>
+            </div>
+        </footer>
+
+
+        {% block javascripts %}
+            <script src="{{ asset('bundles/jQuery-2.2.3/jquery-2.2.3.min.js') }}"></script>
+            <script src="{{ asset('bundles/jquery-sizzle/src/sizzle.js') }}"></script>
+            <script src="{{ asset('bundles/highlight.pack.js') }}"></script>
+            <script src="{{ asset('bundles/Momentjs/moment.min.js') }}"></script>
+            <script src="{{ asset('js/bootstrap-datetime.js') }}"></script>
+        {% endblock %}
+
+    </body>
+</html>

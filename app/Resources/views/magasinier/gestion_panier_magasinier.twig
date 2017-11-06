@@ -1,0 +1,128 @@
+{% extends 'base.html.twig' %}
+
+{% block menu %}
+    {% include 'menubase.twig' %}
+{% endblock %}
+
+{% block header %}
+    <div class="page-header">
+      <h2 class="centrer isoler">Gestion des paniers</h2>
+    </div>
+{% endblock %}
+
+{% block section %}
+
+  <div class="container">
+    {% if alertStock == true %}
+      <div class="alert alert-dismissible alert-danger">Pas assez de produits en stock !</div>
+    {% endif %}
+    {% if alertTropProduits == true %}
+      <div class="alert alert-dismissible alert-danger">Trop de produits à délivrés !</div>
+    {% endif %}
+    {% if alertNeg == true %}
+      <div class="alert alert-dismissible alert-danger">Quantité négative impossible</div>
+    {% endif %}
+  
+    <table class="table table-striped table-hover" style="background-color:lightblue;">
+      <thead>
+        <tr>
+          <th>Réf.</th>
+          <th>Nom</th>
+          <th>Qté. commandée restante</th>
+          <th>Qté. en stock</th>
+          <th>Qté. à délivrer</th>
+          <th>Validation</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% set cpt=0 %}
+
+        {% for contenir in Contenir %}
+          {% set cpt = cpt+1 %}
+          <tr>
+            <td>{{ contenir.getRefProduit() }}</td>
+
+            {% for produit in Produit %}
+            {% if produit.getRefProduit() == contenir.getRefProduit() %}
+              <td>{{ produit.getNomProduit() }}</td>
+            {% endif %}
+            {% endfor %}
+
+            <td>{{ contenir.getQuantiteProduit() - contenir.getQuantiteProduitGeree() }}</td>
+
+            {% for produit in Produit %}
+            {% if produit.getRefProduit() == contenir.getRefProduit() %}
+              <td>{{ produit.getQuantiteProduit() }}</td>
+            {% endif %}
+            {% endfor %}
+
+            <td>
+              <input type="number" id="qtt{{ cpt }}" value="1"></input>
+            </td>
+
+            <td>
+              {% if (contenir.getQuantiteProduit() - contenir.getQuantiteProduitGeree()) == 0 %}
+                OK
+              {% else %}
+                <a type="button" class="btn btn-default btn-sm" onclick="confirme('{{ cpt }}','{{ Panier.getIdPanier() }}','{{ contenir.getRefProduit() }}')">{% set qtt %}3{% endset %}Confirmer</a>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {% set validate = 1 %}
+    {% for contenir in Contenir %}
+      {% if (contenir.getQuantiteProduit() - contenir.getQuantiteProduitGeree()) > 0 %}
+        {% set validate = 0 %}
+      {% endif %}
+    {% endfor %}
+
+    {% if validate == 1 %}
+      <a type="button" class="btn btn-success btn-sm" href="{{ path('gestionPanierValidationMagasinier', { id_panier : Panier.getIdPanier() }) }}" >Valider panier</a>
+    {% else %}
+      <a type="button" class="btn btn-danger btn-sm" href="#" >Valider panier</a>
+    {% endif %}
+
+  </div>
+
+  <script>
+  /*var str = location.href;
+      var lgth = str.length;
+
+      var test = str.substring(lgth-16, lgth);
+      var res = str.substring(0, lgth-16);
+      alert("localeCompare="+test+" res="+res);*/
+    function confirme(cpt,id_panier,ref){
+    var qtt = $("#qtt"+cpt).val();
+      //alert("cpt="+cpt+" ref="+ref+" idpanier="+id_panier+" qtt="+qtt);
+
+      //on recupere l'url
+      var str = location.href;
+      var lgth = str.length;
+
+      //taille de "paniers/gestion/"+id_panier
+      var lgthFin = "paniers/gestion/"+id_panier;
+      lgthFin = lgthFin.length;
+
+      var test = str.substring(lgth-lgthFin, lgth);
+      var res = str.substring(0, lgth-lgthFin);
+
+      //alert("res="+res+"  test="+test);
+      //on test et on modifie en consequence
+      if(test.localeCompare("paniers/gestion")==0)
+        res += "produits/"+id_panier+"/"+ref+"/"+qtt;
+      else{
+        res = str.substring(0, lgth-(lgth-str.indexOf("/magasinier")));
+        res += "/magasinier/paniers/gestion/produits/"+id_panier+"/"+ref+"/"+qtt;
+
+
+      }
+
+      //redirection sur l'url finale
+      document.location.href = res;
+      //alert("res="+res);
+    }
+  </script>
+{% endblock %}

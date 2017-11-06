@@ -1,0 +1,97 @@
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+listeProduit:
+    path: /produits/liste/{_param}
+    defaults: {_controller: AppBundle:Produit:listProduit, message: "message", _param: "tout"}
+
+listeClientProduit:
+    path: /client/produits/liste.{_format}
+    defaults: {_controller: AppBundle:Produit:listClientProduit, _format: "html"}
+
+panierClient:
+    path: /client/paniers
+    defaults: {_controller: AppBundle:CreationPanier:index}
+
+creationPanierClient:
+    path: /client/paniers/creation
+    defaults: {_controller: AppBundle:CreationPanier:newPanier}
+
+ajoutPanierClient:
+    path: /client/paniers/ajout/{id_panier}/{ref}/{qtt}
+    defaults: {_controller: AppBundle:CreationPanier:addToPanier}
+
+listePaniersClient:
+    path: /client/paniers/liste
+    defaults: {_controller: AppBundle:ListePaniers:listPaniers}
+
+contenuPanierClient:
+    path: /client/paniers/{id_panier}
+    defaults: {_controller: AppBundle:ListePaniers:viewPanier}
+
+suppressionPanierClient:
+    path: /client/paniers/supprimer/{id_panier}
+    defaults: {_controller: AppBundle:CreationPanier:delPanier}
+
+validationPanierClient:
+    path: /client/paniers/valider/{id_panier}
+    defaults: {_controller: AppBundle:CreationPanier:validatePanier}
+
+listePaniersMagasinier:
+    path: /magasinier/paniers/liste
+    defaults: {_controller: AppBundle:GestionPaniersMagasinier:listPaniers}
+
+gestionPanierMagasinier:
+    path: /magasinier/paniers/gestion/{id_panier}
+    defaults: {_controller: AppBundle:GestionPaniersMagasinier:gestionPanier}
+
+gestionPanierProduitMagasinier:
+    path: /magasinier/paniers/gestion/produits/{id_panier}/{ref}/{qtt}
+    defaults: {_controller: AppBundle:GestionPaniersMagasinier:gestionPanierProduit}
+
+gestionPanierValidationMagasinier:
+    path: /magasinier/paniers/gestion/validation/{id_panier}
+    defaults: {_controller: AppBundle:GestionPaniersMagasinier:gestionPanierValider}
+
+listeMagasinierProduit:
+    path: /magasinier/produits/liste
+    defaults: {_controller: AppBundle:Produit:listMagasinierProduit, message: "message"}
+
+listeStocksProduit:
+    path: /magasinier/produits/liste/stocks.{_format}
+    defaults: {_controller: AppBundle:Produit:listStocksProduit, message: "message", _format: "html"}
+
+listeAlerte:
+    path: /magasinier/alertes/liste
+
+updateProduit:
+    path: /magasinier/produits/update/{numero}
+    defaults: {_controller: AppBundle:Produit:updateProduit}
+
+updateStock:
+    path: /magasinier/produits/update/stocks/{numero}
+    defaults: {_controller: AppBundle:Produit:updateStockProduit}
+
+ajoutProduit:
+    path: /magasinier/produits/ajout
+    defaults: {_controller: AppBundle:Produit:addProduit}
+
+affichePersonne:
+    path: /personne/liste
+    defaults: {_controller: AppBundle:Personne:index}
+
+montrePersonne:
+    path: /personne/profil
+    defaults: {_controller: AppBundle:Personne:show}
+
+creationPersonne:
+    path: /personne/creation
+    defaults: {_controller: AppBundle:Personne:new}
+
+login:
+    path: /login
+    defaults: {_controller: AppBundle:Security:login}
+
+logout:
+    path: /logout

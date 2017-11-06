@@ -1,0 +1,20 @@
+AppBundle\Entity\Panier:
+    repositoryClass: AppBundle\Repository\PanierRepository
+    type: entity
+    table: panier
+    fields:
+        id_panier:
+            id: true
+            type: integer
+            generator: { strategy: AUTO }
+        etat_panier: 
+            type: integer
+        date_panier:
+            type: datetime
+    manyToOne:
+        id_personne:
+            targetEntity: Personne
+            joinColumns:
+                personne:
+                    referencedColumnName: id_personne
+   

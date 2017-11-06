@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block menu %}
+    {% include 'menubase.twig' %}
+{% endblock %}
+
+{% block header %}
+    <div class="page-header">
+      <h2 class="centrer isoler">Création d'un panier</h2>
+    </div>
+{% endblock %}
+
+{% block section %}
+    <p class="centrer"><a href="{{ path('creationPanierClient') }}" class="btn btn-primary">Nouveau Panier (ou reprise du precedent)</a></p>
+{% endblock %}
+

@@ -1,0 +1,19 @@
+AppBundle\Entity\Personne:
+    repositoryClass: AppBundle\Repository\PersonneRepository
+    type: entity
+    table: personne
+    fields:
+        id_personne:
+            id: true
+            type: integer
+            generator: { strategy: AUTO }
+        pseudo_personne:
+            type: string
+            nullable: false
+        mdp_personne:
+            type: string
+            nullable: false
+        type_personne:
+            type: string
+            columnDefinition: ENUM('Client', 'Employe')
+            nullable: false

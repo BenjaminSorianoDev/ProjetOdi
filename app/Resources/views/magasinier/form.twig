@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Magasinier | {{ titreOnglet }}
+{% endblock %}
+
+{% block menu %}
+
+    {% include 'menubase.twig' %}
+    
+{% endblock %}
+
+{% block header %}
+
+    <div class="page-header">
+        <h2 class="centrer isoler">{{ titre }}</h2>
+    </div>
+
+{% endblock %}
+
+{% block section %}
+    {{ form_start(form) }}
+	{{ form_errors(form) }}
+	{{ form_widget(form) }}
+	{{ form_end(form) }}
+{% endblock %}

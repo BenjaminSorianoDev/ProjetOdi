@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block menu %}
+    {% include 'menubase.twig' %}
+{% endblock %}
+
+{% block header %}
+    <div class="page-header">
+      <h2 class="centrer isoler">Panier N° {{ Panier.getIdPanier() }}</h2>
+    </div>
+{% endblock %}
+
+{% block section %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-4">
+        <h4>Contenu du panier en cours :</h4>
+        <table class="table table-striped table-hover" style="background-color:lightblue;">
+          <thead>
+            <tr>
+              <th>Réf.</th>
+              <th>Nom</th>
+              <th>Qté.</th>
+              <th>Prix</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for contenir in Contenir %}
+              <tr>
+                <td>{{ contenir.getRefProduit() }}</td>
+
+                {% for produit in Produit %}
+                {% if produit.getRefProduit() == contenir.getRefProduit() %}
+                <td>{{ produit.getNomProduit() }}</td>
+                {% endif %}
+                {% endfor %}
+
+                <td>{{ contenir.getQuantiteProduit() }}</td>
+
+                {% for produit in Produit %}
+                {% if produit.getRefProduit() == contenir.getRefProduit() %}
+                  <td>{{ produit.getPrixProduit()*contenir.getQuantiteProduit() }}</td>
+                {% endif %}
+                {% endfor %}
+
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <a type="button" class="btn btn-warning " href="{{ path('validationPanierClient', { id_panier : Panier.getIdPanier() }) }}">Valider panier</a>
+        <a type="button" class="btn btn-danger" href="{{ path('suppressionPanierClient', { id_panier : Panier.getIdPanier() }) }}">Supprimer panier</a>
+      </div>
+
+
+
+      <div class="col-sm-8">
+        <h4>Contenu du catalogue :</h4>
+        <table class="table table-striped " style="background-color:lightgrey;">
+          <thead>
+            <tr>
+              <th>Réf.</th>
+              <th>Nom</th>
+              <th>Description</th>
+              <th>Categorie</th>
+              <th>Prix</th>
+              <th>Qté.</th>
+              <th>Ajouter</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% set cpt=0 %}
+
+          {% for produit in Produit %}
+            {% set cpt = cpt+1 %}
+            {% if produit.getVisibleProduit() == 1 %}
+                <tr>
+                    <td>{{ produit.getRefProduit() }}</td>
+                    <td>{{ produit.getNomProduit() }}</td>
+                    <td>{{ produit.getDescriptionProduit() }}</td>
+                    <td>{{ produit.getCategorieProduit() }}</td>
+                    <td>{{ produit.getPrixProduit() }}</td>
+                    <td>
+                      <input type="number" id="qtt{{ cpt }}"  min="0" max="{{produit.getQuantiteProduit}}"></input>
+                    </td>
+                    <td>
+                      <a type="button" id="btnAdd{{ cpt }}" class="btn btn-primary btn-sm" onclick="confirme('{{ cpt }}','{{ produit.getRefProduit() }}','{{ Panier.getIdPanier() }}', '{{produit.getQuantiteProduit}}' )">{% set qtt %}3{% endset %}Ajouter</a>
+                    </td>
+                </tr>
+            {% endif %}
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div><!-- fin row -->
+  </div><!-- fin container -->
+
+
+  <script>
+    function confirme(cpt,ref,id_panier,max){
+    var qtt = $("#qtt"+cpt).val();
+
+      //on recupere l'url
+      var str = location.href;
+      var lgth = str.length;
+      if(qtt>0)
+      {
+        //on recupere la partie de l'url devant(ou pas) contenir "paniers/creation"
+        var test = str.substring(lgth-16, lgth);
+        var res = str.substring(0, lgth-16);
+        //on test et on modifie en consequence
+        if(test.localeCompare("paniers/creation")==0)
+          res += "paniers/ajout/"+id_panier+"/"+ref+"/"+qtt;
+        else{
+          res = str.substring(0, lgth-(lgth-str.indexOf("/client")));
+          res += "/client/paniers/ajout/"+id_panier+"/"+ref+"/"+qtt;
+        }
+        //redirection sur l'url finale
+        document.location.href = res;
+      }
+    }
+  </script>
+{% endblock %}

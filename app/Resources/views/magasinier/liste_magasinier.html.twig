@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Magasinier | Produits
+{% endblock %}
+
+{% block menu %}
+    {% include 'menubase.twig' %}
+{% endblock %}
+
+{% block header %}
+      <div class="page-header">
+        <h2 class="centrer isoler">Liste des produits en stock</h2>
+      </div>
+{% endblock %}
+
+{% block section %}
+  <div class="container">
+    {% if produits %}
+        <table class="table table-striped table-hover ">
+          <thead>
+            <tr>
+              <th>Référence</th>
+              <th>Nom</th>
+              <th>Descriptif</th>
+              <th>Catégorie</th>
+              <th>Quantité</th>
+              <th>Prix (€)</th>
+              <th>Date Limite</th>
+              <th>Visibilité</th>
+              <th>Modifier Infos</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for produit in produits %}
+              <tr>
+                <td>{{produit.getRefProduit}}</td>
+                <td>{{produit.getNomProduit}}<br /><a href="/img/{{ produit.getPhotoProduit }}">Voir photo</a></td>
+                <td>{{produit.getDescriptionProduit}}</td>
+                <td>{{produit.getCategorieProduit}}</td>
+                <td>{{produit.getQuantiteProduit}}</td>
+                <td>{{produit.getPrixProduit}}</td>
+                <td>{{produit.getDatePeremptionProduit|date('d / m / Y')}}</td>
+                <td>
+                  {% if produit.getVisibleProduit == 1 %}
+                    Visible
+                  {% else %}
+                    Invisible
+                  {% endif %}
+                </td>
+                <td><a href="{{ path('updateProduit', {numero: produit.getRefProduit}) }}">
+                <span class="glyphicon glyphicon-edit"></span>
+                </a></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table> 
+    {% else %}
+       <p class="centrer">Aucun produit dans la base.</p>
+    {% endif %}
+  </div>
+{% endblock %}
+
+
+
+
